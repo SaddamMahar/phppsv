@@ -61,7 +61,7 @@ class VehicleController extends Controller
         $dto = new VehicleDto();
         $dto = modelToDto($dto, $vehicle);
 
-        return response()->json($vehicle, '200');
+        return response()->json($dto, '200');
     }
 
     public function getAllVehicles(Request $request)
@@ -70,7 +70,7 @@ class VehicleController extends Controller
         $vehicleDtos = [];
         foreach ($vehicles as $vehicle) {
             $dto = new VehicleDto();
-            $dto = modelToDto($dto, $vehicle);
+            $dto = $this->modelToDto($dto, $vehicle);
 
             array_push($vehicleDtos, $dto);
         }
@@ -82,9 +82,9 @@ class VehicleController extends Controller
         $vehicle = Vehicle::where($key, $value)->first();
 
         $dto = new VehicleDto();
-        $dto = modelToDto($dto, $vehicle);
+        $dto = $this->modelToDto($dto, $vehicle);
 
-        return response()->json($vehicle, '200');
+        return response()->json($dto, '200');
     }
 
     public function arrToModel($vehicle, $params)

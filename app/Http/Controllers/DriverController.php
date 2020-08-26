@@ -55,19 +55,33 @@ class DriverController extends Controller
     public function getDriverById(Request $request, $id)
     {
         $driver = Driver::where('id', $id)->first();
-        return response()->json($driver, '200');
+
+        $dto = new DriverDto();
+        $dto = $this->modelToDto($dto, $driver);
+
+        return response()->json($dto, '200');
     }
 
     public function getAllDrivers(Request $request)
     {
         $drivers = Driver::all();
-        return response()->json($drivers, '200');
+
+        $driverDtos = [];
+        foreach ($drivers as $driver) {
+            $dto = new DriverDto();
+            $dto = $this->modelToDto($dto, $driver);
+            array_push($driverDtos, $dto);
+        }
+
+        return response()->json($driverDtos, '200');
     }
 
     public function findByField(Request $request, $key, $value)
     {
         $driver = Driver::where($key, $value)->first();
-        return response()->json($driver, '200');
+        $dto = new DriverDto();
+        $dto = $this->modelToDto($dto, $driver);
+        return response()->json($dto, '200');
     }
 
     public function arrToModel($driver, $params)
@@ -124,22 +138,22 @@ class DriverController extends Controller
         return $driver;
     }
 
-    public function modelToDto($dto, $darray)
+    public function modelToDto($dto, $elqModel)
     {
-        $dto->setId($darray['id']);
-        $dto->setDriverName($darray['driver_name']);
-        $dto->setContact($darray['contact']);
-        $dto->setAddress($darray['address']);
-        $dto->setDateOfBirth($darray['date_of_birth']);
-        $dto->setCnic($darray['cnic']);
-        $dto->setEyeSight($darray['eye_sight']);
-        $dto->setDisability($darray['disability']);
-        $dto->setLicenseNO($darray['license_no']);
-        $dto->setLicenseType($darray['license_type']);
-        $dto->setLicenseExpiry($darray['license_expiry']);
-        $dto->setLicenseIssuingAuthority($darray['license_issuing_authority']);
-        $dto->setLicenseVerification($darray['license_verification']);
-        $dto->setTransportCompany($darray['transport_company']);
+        $dto->setId($elqModel->id);
+        $dto->setDriverName($elqModel->driver_name);
+        $dto->setContact($elqModel->contact);
+        $dto->setAddress($elqModel->address);
+        $dto->setDateOfBirth($elqModel->date_of_birth);
+        $dto->setCnic($elqModel->cnic);
+        $dto->setEyeSight($elqModel->eye_sight);
+        $dto->setDisability($elqModel->disability);
+        $dto->setLicenseNO($elqModel->license_no);
+        $dto->setLicenseType($elqModel->license_type);
+        $dto->setLicenseExpiry($elqModel->license_expiry);
+        $dto->setLicenseIssuingAuthority($elqModel->license_issuing_authority);
+        $dto->setLicenseVerification($elqModel->license_verification);
+        $dto->setTransportCompany($elqModel->transport_company);
 
         return $dto;
     }
