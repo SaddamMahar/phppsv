@@ -23,6 +23,7 @@ class Vehicle extends Migration
             $table->string('vehicle_color');
             $table->string('chassis_no')->nullable();
             $table->string('engine_no')->nullable();
+            $table->string('avatar')->nullable();
             $table->string('seating_capacity')->nullable();
             $table->string('vehicle_route_no')->nullable();
             $table->string('route_city')->nullable();

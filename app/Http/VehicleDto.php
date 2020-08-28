@@ -12,7 +12,7 @@ namespace App\Http;
 class VehicleDto implements \JsonSerializable
 {
     private $id, $vehicleRegistrationNumber, $vehicleRegistrationAuthority, $vehicleType, $vehicleMake, $vehicleModel,
-        $vehicleColor, $chassisNo, $engineNo, $seatingCapacity, $vehicleRouteNo, $routeCity,
+        $vehicleColor, $chassisNo, $engineNo, $avatar, $seatingCapacity, $vehicleRouteNo, $routeCity,
         $routePermitAuthority, $route_permit_expiry, $fitnessCertificateNumber, $fitnessCertificateAuthority, $fitnessCertificateExpiry,
         $tyreCondition, $nextTyreCheckingDate, $fireExtinguisherExpiry, $vechicleTransportCompany,
         $vechicleTyreCondition, $managerName, $managerCellNumber, $ownersName, $ownersCellNumber,
@@ -31,6 +31,7 @@ class VehicleDto implements \JsonSerializable
         $this->vehicleColor = $arr['vehicle_color'];
         $this->chassisNo = $arr['chassis_no'];
         $this->engineNo = $arr['engine_no'];
+        $this->avatar = $arr['avatar'];
         $this->seatingCapacity = $arr['seating_capacity'];
         $this->vehicleRouteNo = $arr['vehicle_route_no'];
         $this->routeCity = $arr['route_city'];
@@ -142,6 +143,22 @@ class VehicleDto implements \JsonSerializable
     public function setEngineNo($engineNo): void
     {
         $this->engineNo = $engineNo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param mixed $avatar
+     */
+    public function setAvatar($avatar): void
+    {
+        $this->avatar = $avatar;
     }
 
     /**

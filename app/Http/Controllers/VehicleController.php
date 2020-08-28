@@ -17,6 +17,9 @@ use Validator;
 
 class VehicleController extends Controller
 {
+    private $fileName = 'avatar';
+    private $imageFolder = 'C:\uploaded-images\driver\\';
+
     public function VehicleRules()
     {
         return [
@@ -35,14 +38,14 @@ class VehicleController extends Controller
         if ($validator->passes()) {
 
             $vehicle = new Vehicle();
-            $vehicle = arrToModel($vehicle, $params);
+            $vehicle = $this->arrToModel($vehicle, $params);
 
             try {
 
                 $vehicle->save();
 //                $dto = new VehicleDto($vehicle->toArray());
                 $dto = new VehicleDto();
-                $dto = modelToDto($dto, $vehicle);
+                $dto = $this->modelToDto($dto, $vehicle);
 
                 return response()->json($dto, 201);
 
@@ -54,12 +57,34 @@ class VehicleController extends Controller
         }
     }
 
+    public function uploadImage(Request $request, $vehicleId)
+    {
+        if ($request->hasFile($this->fileName)) {
+            $file = $request->file($this->fileName);
+            $request->file($this->fileName)->move($this->imageFolder . '\\' . $vehicleId, $file->getClientOriginalName());
+
+            $vehicle = Vehicle::where('id', $vehicleId)->first();
+            $vehicle->avatar = $this->imageFolder . $vehicleId . '\\' . $file->getClientOriginalName();
+            $vehicle->save();
+            return response()->json($this->imageFolder . $vehicleId . '\\' . $file->getClientOriginalName(), 200);
+        }
+
+        return response()->json('Not able to upload avatar', 500);
+    }
+
+    public function downloadImage(Request $request, $vehicleId)
+    {
+        $vehicle = Vehicle::where('id', $vehicleId)->first();
+        $avatarPath = $vehicle->avatar;
+        return response()->download($avatarPath);
+    }
+
     public function getVehicleById(Request $request, $id)
     {
         $vehicle = Vehicle::where('id', $id)->first();
 
         $dto = new VehicleDto();
-        $dto = modelToDto($dto, $vehicle);
+        $dto = $this->modelToDto($dto, $vehicle);
 
         return response()->json($dto, '200');
     }

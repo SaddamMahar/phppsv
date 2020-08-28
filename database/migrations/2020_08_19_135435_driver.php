@@ -20,6 +20,7 @@ class Driver extends Migration
             $table->string('address')->nullable();
             $table->timestamp('date_of_birth')->nullable();
             $table->string('cnic');
+            $table->string('avatar')->nullable();
             $table->string('eye_sight')->nullable();
             $table->string('disability')->nullable();
             $table->string('license_no');

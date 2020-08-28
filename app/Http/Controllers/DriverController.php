@@ -17,6 +17,9 @@ use Validator;
 
 class DriverController extends Controller
 {
+    private $fileName = 'avatar';
+    private $imageFolder = 'C:\uploaded-images\driver\\';
+
     public function DriverRules()
     {
         return [
@@ -40,7 +43,7 @@ class DriverController extends Controller
                 $driver->save();
                 $darray = $driver->toArray();
                 $dto = new DriverDto($darray);
-                $dto = $this->modelToDto($dto, $darray);
+                $dto = $this->modelToDto($dto, $driver);
 
                 return response()->json($dto, 201);
 
@@ -50,6 +53,28 @@ class DriverController extends Controller
         } else {
             return response()->json($validator->errors()->all(), 500);
         }
+    }
+
+    public function uploadImage(Request $request, $driverId)
+    {
+        if ($request->hasFile($this->fileName)) {
+            $file = $request->file($this->fileName);
+            $request->file($this->fileName)->move($this->imageFolder . $driverId . '\\', $file->getClientOriginalName());
+
+            $driver = Driver::where('id', $driverId)->first();
+            $driver->avatar = $this->imageFolder . $driverId . '\\' . $file->getClientOriginalName();
+            $driver->save();
+            return response()->json($this->imageFolder . $driverId . '\\' . $file->getClientOriginalName(), 200);
+        }
+
+        return response()->json('Not able to upload avatar', 500);
+    }
+
+    public function downloadImage(Request $request, $driverId)
+    {
+        $driver = Driver::where('id', $driverId)->first();
+        $avatarPath = $driver->avatar;
+        return response()->download($avatarPath);
     }
 
     public function getDriverById(Request $request, $id)

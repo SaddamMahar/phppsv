@@ -19,7 +19,7 @@ class Vehicle extends Model
     ];
     protected $fillable = [
         'vehicle_registration_number', 'vehicle_registration_authority', 'vehicle_type', 'vehicle_make', 'vehicle_model',
-        'vehicle_color', 'chassis_no', 'engine_no', 'seating_capacity', 'vehicle_route_no', 'route_city',
+        'vehicle_color', 'chassis_no', 'engine_no', 'avatar', 'seating_capacity', 'vehicle_route_no', 'route_city',
         'route_permit_authority', 'route_permit_expiry', 'fitness_certificate_number', 'fitness_certificate_authority', 'fitness_certificate_expiry',
         'tyre_condition', 'next_tyre_checking_date', 'fire_extinguisher_expiry', 'vechicle_transport_company',
         'vechicle_tyre_condition', 'manager_name', 'manager_cell_number', 'owners_name', 'owners_cell_number',

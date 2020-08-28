@@ -18,7 +18,7 @@ class Driver extends Model
         'tags' => 'array'
     ];
     protected $fillable = [
-        'driver_name', 'contact', 'address', 'date_of_birth', 'cnic', 'eye_sight', 'disability', 'license', 'license_type',
+        'driver_name', 'contact', 'address', 'date_of_birth', 'cnic', 'avatar', 'eye_sight', 'disability', 'license', 'license_type',
         'license_expiry', 'license_issuing_authority', 'license_verification', 'transport_company'
     ];
 

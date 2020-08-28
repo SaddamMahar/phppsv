@@ -16,10 +16,14 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post('/driver', 'DriverController@createDriver');
+Route::post('/driver/avatar/upload/{driverId}', 'DriverController@uploadImage');
+Route::get('/driver/avatar/download/{driverId}', 'DriverController@downloadImage');
 Route::get('/driver', 'DriverController@getAllDrivers');
 Route::get('/driver/{id}', 'DriverController@getDriverById');
 Route::get('/driver/{field}/{value}', 'DriverController@findByField');
 Route::post('/vehicle', 'VehicleController@createVehicle');
+Route::post('/vehicle/avatar/upload/{vehicleId}', 'VehicleController@uploadImage');
+Route::get('/vehicle/avatar/download/{vehicleId}', 'VehicleController@downloadImage');
 Route::get('/vehicle', 'VehicleController@getAllVehicles');
 Route::get('/vehicle/{id}', 'VehicleController@getVehicleById');
 Route::get('/vehicle/{field}/{value}', 'VehicleController@findByField');

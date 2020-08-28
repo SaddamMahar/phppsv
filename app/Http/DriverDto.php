@@ -12,7 +12,7 @@ namespace App\Http;
 class DriverDto implements \JsonSerializable
 {
 
-    private $id, $driverName, $contact, $address, $dateOfBirth, $cnic, $eyeSight, $disability, $licenseNo, $licenseType, $licenseExpiry,
+    private $id, $driverName, $contact, $address, $dateOfBirth, $cnic, $avatar, $eyeSight, $disability, $licenseNo, $licenseType, $licenseExpiry,
         $licenseIssuingAuthority, $licenseVerification, $transportCompany;
 
 
@@ -28,6 +28,9 @@ class DriverDto implements \JsonSerializable
         }
         if (isset($arr['date_of_birth'])) {
             $this->dateOfBirth = $arr['date_of_birth'];
+        }
+        if (isset($arr['avatar'])) {
+            $this->avatar = $arr['avatar'];
         }
         if (isset($arr['eye_sight'])) {
             $this->eyeSight = $arr['eye_sight'];
@@ -146,6 +149,22 @@ class DriverDto implements \JsonSerializable
     public function setCnic($cnic): void
     {
         $this->cnic = $cnic;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param mixed $avatar
+     */
+    public function setAvatar($avatar): void
+    {
+        $this->avatar = $avatar;
     }
 
     /**
